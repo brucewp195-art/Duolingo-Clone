@@ -22,16 +22,16 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
+    - name: Replace deprecated jcenter() with mavenCentral()
+      working-directory: ./DuolingoClone
+      run: |
+        find . -name "build.gradle" -exec sed -i 's/jcenter()/mavenCentral()/g' {} +
+
     - name: Generate Gradle Wrapper
       working-directory: ./DuolingoClone
       run: |
         gradle wrapper --gradle-version 8.5 --distribution-type all
         chmod +x gradlew
-
-    - name: Replace deprecated jcenter() with mavenCentral()
-      working-directory: ./DuolingoClone
-      run: |
-        find . -name "build.gradle" -exec sed -i 's/jcenter()/mavenCentral()/g' {} +
 
     - name: Build Debug APK
       working-directory: ./DuolingoClone
