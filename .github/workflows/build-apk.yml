@@ -19,15 +19,18 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Generate modern Gradle Wrapper
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Generate Gradle Wrapper
       working-directory: ./DuolingoClone
       run: |
-        gradle wrapper --gradle-version 8.5
+        gradle wrapper --gradle-version 8.5 --distribution-type all
         chmod +x gradlew
 
     - name: Build Debug APK
-      run: ./gradlew assembleDebug
       working-directory: ./DuolingoClone
+      run: ./gradlew assembleDebug --stacktrace
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
